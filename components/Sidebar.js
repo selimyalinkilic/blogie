@@ -7,7 +7,7 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   return (
-    <div className="w-full">
+    <div className="w-full lg:w-auto">
       <div className="p-4 md:p-5 flex w-full flex justify-between items-center lg:hidden">
         <button
           className="flex items-center justify-center p-2 lg:p-0 bg-black text-white text-2xl rounded"
