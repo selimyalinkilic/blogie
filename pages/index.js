@@ -11,7 +11,6 @@ export default function Home() {
       </Head>
       <main className="flex w-full flex-col lg:flex-row">
         <Sidebar />
-        <div className="flex lg:ml-72 xl:ml-80 lg:p-8 w-full"></div>
       </main>
     </div>
   );
