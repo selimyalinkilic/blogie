@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const Card = ({ size, title, slug, date, summary }) => {
+const Card = ({ size, title, slug, published_at, summary }) => {
   return (
     <article
       className={`flex mb-4 mb-md-5 lg:mb-6 xl:mb-8 w-full ${
@@ -20,7 +20,7 @@ const Card = ({ size, title, slug, date, summary }) => {
         <div className="flex justify-center items-center mb-4">
           <div className="bg-black flex w-6 h-px"></div>
           <div className="px-4">
-            <time className="text-center text-sm">{date}</time>
+            <time className="text-center text-sm">{published_at}</time>
           </div>
           <div className="bg-black flex w-6 h-px"></div>
         </div>
