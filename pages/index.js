@@ -1,7 +1,21 @@
 import Head from "next/head";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/Sidebar";
+import { client } from "../graphql/connection";
+import { GET_ALL_POSTS } from "../graphql/queries";
+import ArticlesLayout from "../components/ArticlesLayout";
 
-export default function Home() {
+export async function getStaticProps() {
+  const { posts } = await client.request(GET_ALL_POSTS);
+
+  return {
+    props: {
+      posts,
+    },
+    revalidate: 10,
+  };
+}
+
+export default function Home({ posts }) {
   return (
     <div>
       <Head>
@@ -11,6 +25,7 @@ export default function Home() {
       </Head>
       <main className="flex w-full flex-col lg:flex-row">
         <Sidebar />
+        <ArticlesLayout title="Tüm Yazılar" hasFilter={true} content={posts} />
       </main>
     </div>
   );
