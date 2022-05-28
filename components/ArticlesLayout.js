@@ -65,14 +65,16 @@ const ArticlesLayout = ({ title, hasFilter, content }) => {
           </button>
         </div>
       )}
-      <div className="flex flex-wrap w-full justify-center mt-6 md:mt-8 lg:mt-12">
-        {loading && <div className="text-center text-base">Loading...</div>}
+      <div className="flex flex-wrap w-full justify-center lg:justify-start mt-6 md:mt-8 lg:mt-12">
+        {loading && (
+          <div className="text-center text-base w-100">Loading...</div>
+        )}
         {data &&
           data.length > 0 &&
           data.map((item, index) => (
             <Card key={index} {...item} size={newClassList.pop()} />
           ))}
-        {message && <h3 className="text-center text-3xl">{message}</h3>}
+        {message && <div className="text-center text-3xl w-100">{message}</div>}
       </div>
     </div>
   );
