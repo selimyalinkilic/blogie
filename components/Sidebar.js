@@ -1,11 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MdSearch, MdBookmark, MdMenu, MdClose } from "react-icons/md";
 import { ImLinkedin, ImTwitter, ImInstagram } from "react-icons/im";
+import { GET_ALL_CATEGORIES } from "../graphql/queries";
+import { client } from "../graphql/connection";
+
+const fetchCategories = async () => {
+  const { categories } = await client.request(GET_ALL_CATEGORIES);
+  return categories;
+};
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    fetchCategories()
+      .then((categories) => {
+        setCategories(categories);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  });
   return (
     <div className="w-full lg:w-auto">
       <div className="p-4 md:p-5 flex w-full flex justify-between items-center lg:hidden">
@@ -53,21 +73,17 @@ const Sidebar = () => {
         </div>
         <div className="p-4 md:p-5 lg:p-4">
           <div className="flex flex-col max-h-64 overflow-y-auto no-scrollbar">
-            <Link href="/">
-              <a className="rounded lg:hover:bg-black text-black lg:hover:text-white lg:transition-all duration-200 text-lg lg:p-2">
-                Mobile
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="rounded lg:hover:bg-black text-black/50 lg:hover:text-white lg:transition-all duration-200 text-lg lg:p-2">
-                Frontend
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="rounded lg:hover:bg-black text-black/50 lg:hover:text-white lg:transition-all duration-200 text-lg lg:p-2">
-                Backend
-              </a>
-            </Link>
+            {isLoading && (
+              <div className="text-center text-gray-500">Loading...</div>
+            )}
+            {!isLoading &&
+              categories.map((category) => (
+                <Link href={`/category/${category.slug}`} key={category.id}>
+                  <a className="rounded lg:hover:bg-black text-black lg:hover:text-white lg:transition-all duration-200 text-lg lg:p-2">
+                    {category.title}
+                  </a>
+                </Link>
+              ))}
           </div>
         </div>
         <div className="px-4 md:px-5 lg:px-6">
