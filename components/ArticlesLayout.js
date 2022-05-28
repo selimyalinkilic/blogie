@@ -36,10 +36,10 @@ const ArticlesLayout = ({ title, hasFilter, content }) => {
   }, [content]);
 
   return (
-    <div className="flex flex-col items-center lg:items-start lg:ml-72 xl:ml-80 lg:p-8 w-full">
+    <div className="flex flex-col items-center lg:items-start lg:ml-72 xl:ml-80 px-4 md:px-5 lg:p-8 w-full">
       <h2 className="text-3xl lg:text-4xl">{title || "-"}</h2>
       {hasFilter && data && data.length > 0 && (
-        <div className="flex items-center lg:mt-6">
+        <div className="flex items-center mt-4 mt:md-5 lg:mt-6">
           <button
             className={`text-base text-black pb-1 border-b-2 ${
               active.includes("newest")
@@ -65,7 +65,7 @@ const ArticlesLayout = ({ title, hasFilter, content }) => {
           </button>
         </div>
       )}
-      <div className="flex flex-wrap w-full justify-center lg:mt-12">
+      <div className="flex flex-wrap w-full justify-center mt-6 md:mt-8 lg:mt-12">
         {loading && <div className="text-center text-base">Loading...</div>}
         {data &&
           data.length > 0 &&
