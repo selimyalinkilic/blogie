@@ -14,3 +14,12 @@ export const GET_ALL_POSTS = gql`
     }
   }
 `;
+
+export const GET_ALL_CATEGORIES = gql`
+  {
+    categories {
+      id
+      title
+    }
+  }
+`;
