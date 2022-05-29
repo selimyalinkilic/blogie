@@ -23,3 +23,25 @@ export const GET_ALL_CATEGORIES = gql`
     }
   }
 `;
+
+export const GET_SINGLE_POST = gql`
+  query ($slug: String!) {
+    post(where: { slug: $slug }) {
+      id
+      title
+      slug
+      published_at
+      tags {
+        id
+        title
+      }
+      content {
+        html
+      }
+      thumbnail {
+        id
+        url
+      }
+    }
+  }
+`;
