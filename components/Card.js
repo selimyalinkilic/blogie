@@ -30,7 +30,7 @@ const Card = ({ size, title, slug, published_at, summary }) => {
           </p>
         </div>
         <div className="flex justify-center">
-          <Link href={`/post/${slug}`}>
+          <Link href={`/articles/${slug}`}>
             <a className="text-white bg-black font-bold text-sm lg:text-base py-2 px-4 lg:py-3 lg:px-5 rounded">
               Read more
             </a>
