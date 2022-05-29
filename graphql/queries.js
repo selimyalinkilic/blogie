@@ -45,3 +45,11 @@ export const GET_SINGLE_POST = gql`
     }
   }
 `;
+
+export const GET_ALL_SLUGS = gql`
+  {
+    posts {
+      slug
+    }
+  }
+`;
