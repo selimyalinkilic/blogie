@@ -3,6 +3,7 @@ import React from "react";
 import { MdWest } from "react-icons/md";
 import Router from "next/router";
 import Link from "next/link";
+import parse from "html-react-parser";
 
 const ArticleDetailLayout = ({
   content,
@@ -36,7 +37,9 @@ const ArticleDetailLayout = ({
       )}
       {data && data.length > 0 && (
         <div className="flex flex-col max-w-[960px]">
-          <h1 className="text-center text-3xl lg:text-4xl mx-auto">{title}</h1>
+          <h1 className="text-center text-3xl lg:text-4xl mx-auto px-8">
+            {title}
+          </h1>
           <time className="text-center text-gray-500 text-base mt-4 mx-auto">
             {published_at}
           </time>
@@ -54,7 +57,7 @@ const ArticleDetailLayout = ({
             />
           </div>
           <article className="prose prose-slate max-w-none prose-base lg:prose-lg prose-img:rounded prose-headings:mb-4 w-full mt-2">
-            {data}
+            {parse(data)}
           </article>
           {tags && tags.length > 0 && (
             <div className="flex items-center mt-10">
