@@ -77,3 +77,13 @@ export const GET_ALL_TAG_SLUGS = gql`
     }
   }
 `;
+
+export const GET_ALL_TAGS = gql`
+  query ($first: Int, $orderBy: TagOrderByInput) {
+    tags(first: $first, orderBy: $orderBy) {
+      id
+      title
+      slug
+    }
+  }
+`;
