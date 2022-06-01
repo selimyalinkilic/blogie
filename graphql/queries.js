@@ -54,3 +54,26 @@ export const GET_ALL_SLUGS = gql`
     }
   }
 `;
+
+export const GET_POSTS_BY_TAG = gql`
+  query ($slug: String!) {
+    posts(where: { tags_some: { slug: $slug } }) {
+      id
+      title
+      summary
+      content {
+        html
+      }
+      published_at
+      slug
+    }
+  }
+`;
+
+export const GET_ALL_TAG_SLUGS = gql`
+  {
+    tags {
+      slug
+    }
+  }
+`;
