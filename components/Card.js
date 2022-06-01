@@ -13,7 +13,7 @@ const Card = ({ size, title, slug, published_at, summary }) => {
           className="text-center mb-4 text-lg lg:text-2xl line-clamp-1"
           title={title}
         >
-          <Link href={`/post/${slug}`}>
+          <Link href={`/articles/${slug}`}>
             <a>{title}</a>
           </Link>
         </h2>
