@@ -66,7 +66,7 @@ const ArticleDetailLayout = ({
               </span>
               <div className="flex flex-wrap">
                 {tags.map((tag) => (
-                  <Link href={`/tags/${tag.title}`} key={tag.id}>
+                  <Link href={`/tags/${tag.slug}`} key={tag.id}>
                     <a className="text-sm leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline first:ml-0">
                       #{tag.title}
                     </a>
