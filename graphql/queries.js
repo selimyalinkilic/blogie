@@ -34,6 +34,7 @@ export const GET_SINGLE_POST = gql`
       tags {
         id
         title
+        slug
       }
       content {
         html
