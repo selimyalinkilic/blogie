@@ -2,18 +2,27 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MdSearch, MdBookmark, MdMenu, MdClose } from "react-icons/md";
 import { ImLinkedin, ImTwitter, ImInstagram } from "react-icons/im";
-import { GET_ALL_CATEGORIES } from "../graphql/queries";
+import { GET_ALL_CATEGORIES, GET_ALL_TAGS } from "../graphql/queries";
 import { client } from "../graphql/connection";
-
 const fetchCategories = async () => {
   const { categories } = await client.request(GET_ALL_CATEGORIES);
   return categories;
 };
-
+const fetchTags = async ($orderBy, $limit) => {
+  const { tags } = await client.request(GET_ALL_TAGS, {
+    orderBy: $orderBy,
+    limit: $limit,
+  });
+  return tags;
+};
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [tags, setTags] = useState([]);
+  const [isTagsLoading, setIsTagsLoading] = useState(true);
+  const [isTagsOrderBy, setIsTagsOrderBy] = useState("published_at_DESC");
+  const [isTagsLimit, setIsTagsLimit] = useState(10);
   const toggle = () => setIsOpen(!isOpen);
   useEffect(() => {
     fetchCategories()
@@ -25,7 +34,16 @@ const Sidebar = () => {
         console.log(err);
         setIsLoading(false);
       });
-  });
+    fetchTags(isTagsOrderBy, isTagsLimit)
+      .then((tags) => {
+        setTags(tags);
+        setIsTagsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsTagsLoading(false);
+      });
+  }, [isTagsOrderBy, isTagsLimit]);
   return (
     <div className="w-full lg:w-auto">
       <div className="p-4 md:p-5 flex w-full flex justify-between items-center lg:hidden">
@@ -91,51 +109,17 @@ const Sidebar = () => {
         </div>
         <div className="p-4 md:p-5 lg:p-6">
           <div className="flex flex-wrap max-h-72 overflow-y-auto no-scrollbar">
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Lorem ipsum
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Sit
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Amet
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Laoreet
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Tempor Velit
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Ullamcorper
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Phasellus
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Duis sed
-              </a>
-            </Link>
-            <Link href="/">
-              <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
-                #Aliquam
-              </a>
-            </Link>
+            {isTagsLoading && (
+              <div className="text-center text-gray-500">Loading...</div>
+            )}
+            {!isTagsLoading &&
+              tags.map((tag) => (
+                <Link href={`/tags/${tag.slug}`} key={tag.id}>
+                  <a className="text-xs leading-none text-white whitespace-nowrap mr-1.5 mb-1.5 p-1.5 rounded bg-black lg:hover:underline">
+                    #{tag.title}
+                  </a>
+                </Link>
+              ))}
           </div>
         </div>
         <div className="px-6 py-6 absolute bottom-0 left-0 flex items-center justify-center w-full">
@@ -159,5 +143,4 @@ const Sidebar = () => {
     </div>
   );
 };
-
 export default Sidebar;
