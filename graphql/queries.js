@@ -20,6 +20,7 @@ export const GET_ALL_CATEGORIES = gql`
     categories {
       id
       title
+      slug
     }
   }
 `;
@@ -73,6 +74,29 @@ export const GET_POSTS_BY_TAG = gql`
 export const GET_ALL_TAG_SLUGS = gql`
   {
     tags {
+      slug
+    }
+  }
+`;
+
+export const GET_POSTS_BY_CATEGORY = gql`
+  query ($slug: String!) {
+    posts(where: { category: { slug: $slug } }) {
+      id
+      title
+      summary
+      content {
+        html
+      }
+      published_at
+      slug
+    }
+  }
+`;
+
+export const GET_ALL_CATEGORY_SLUGS = gql`
+  {
+    categories {
       slug
     }
   }
