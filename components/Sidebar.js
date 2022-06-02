@@ -96,7 +96,7 @@ const Sidebar = () => {
             )}
             {!isLoading &&
               categories.map((category) => (
-                <Link href={`/category/${category.slug}`} key={category.id}>
+                <Link href={`/categories/${category.slug}`} key={category.id}>
                   <a className="rounded lg:hover:bg-black text-black lg:hover:text-white lg:transition-all duration-200 text-lg lg:p-2">
                     {category.title}
                   </a>
